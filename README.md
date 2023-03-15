@@ -6,7 +6,14 @@
 
 Decodes the raw data protocol of the Zeo headband
 
-See [the documentation](https://docs.rs/rawzeo/) for more information.
+## Useful links
+
+- [Zeo Raw Data Library v2.0 documentation](http://www.sleepstreamonline.com/rdl/intro.html)
+- [old python 2 version of the library](https://github.com/openyou/zeo-raw-data-api)
+- [Zeo Firmware and Raw Data API on OpenYou github](https://www.openyou.org/2013/06/11/zeo-firmware-and-raw-data-api-on-openyou-github/)
+- [Last copy of the Zeo firmware and SDK available](https://github.com/openyou/zeo-firmware)
+
+See the [crate documentation](https://docs.rs/rawzeo/) for more information.
 
 ## Status
 
