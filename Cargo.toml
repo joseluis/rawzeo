@@ -15,8 +15,8 @@ include = [
 	"/README.md",
 	"/LICENSE-*",
 ]
-categories = []
-keywords = []
+categories = ["api-bindings", "hardware-support", "encoding", "command-line-utilities"]
+keywords = ["eeg", "brainwave", "headset", "neuroscience"]
 publish = true
 
 [dependencies]
