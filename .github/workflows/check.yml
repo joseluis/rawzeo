@@ -53,17 +53,24 @@ jobs:
 
   # 2. documentation
   doc:
-    name: "nightly / doc"
+    name: "nightly / doc lib"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # - name: "Install build dependencies"
+      #   # libudev-dev    : serial-port
+      #   run: |
+      #     sudo apt update
+      #     sudo apt install -y libudev-dev
+
+      - name: "checkout"
+        uses: actions/checkout@v3
 
       - name: "Install nightly"
         uses: dtolnay/rust-toolchain@nightly
 
         # NOTE: CUSTOM
       - name: "cargo doc"
-        run: cargo doc # --features=nightly
+        run: cargo doc --no-default-features
         env:
           RUSTDOCFLAGS: --cfg docsrs
 
@@ -94,6 +101,12 @@ jobs:
         msrv: [1.66.1]
     name: ubuntu / ${{ matrix.msrv }}
     steps:
+      - name: "Install build dependencies"
+        # libudev-dev    : serial-port
+        run: |
+          sudo apt update
+          sudo apt install -y libudev-dev
+
       - name: "checkout"
         uses: actions/checkout@v3
 
