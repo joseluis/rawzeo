@@ -4,7 +4,7 @@
 //
 
 use std::{
-    collections::{ /* HashMap, */ VecDeque},
+    collections::VecDeque,
     io::{self, Read},
     time::Duration,
 };
@@ -12,7 +12,7 @@ use std::{
 use circular_buffer::CircularBuffer;
 use serialport::{Parity, StopBits};
 
-use rawzeo::{DataType};
+use rawzeo::DataType;
 
 // TODO:w
 // thread_local! {
