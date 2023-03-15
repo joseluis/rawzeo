@@ -99,40 +99,8 @@ pub struct ParsedMessage {
     data: VecDeque<u8>,
 }
 
-/**
-Parses the data coming from the serial port connected to Zeo.
-
-The serial port is set at baud 38400, no parity, one stop bit.
-Data is sent Least Significant Byte first.
-
-The serial protocol is:
-    `AncllLLTttsidddd`
-
-    * A  is a character starting the message
-    * n  is the protocol "version", ie "4"
-    * c  is a one byte checksum formed by summing the identifier byte and all
-      the data bytes
-    * ll is a two byte message length sent LSB first. This length includes the
-      size of the data block plus the identifier.
-    * LL is the inverse of ll sent for redundancy. If ll does not match !LL, we
-      can start looking for the start of the next block immediately, instead of
-      reading some arbitrary number of bytes, based on a bad length.
-    * T  is the lower 8 bits of Zeo's unix time.
-    * tt is the 16-bit sub-second (runs through 0xFFFF in 1second), LSB first.
-      NOTE: max value seen is 16, so it's 0xF in 1 second
-    * s  is an 8-bit sequence number.
-    * i  is the datatype
-    * d  is the array of binary data (seems to be 4 len minimum)
-
-The incoming data is cleaned up into packets containing a timestamp,
-the raw data output version, and the associated data.
-
-External code can be sent new data as it arrives by adding
-themselves to the callback list using the addCallBack function.
-It is suggested, however, that external code use the ZeoParser to
-organize the data into events and slices of data.
-*/
-// TODO: IMPROVE return data
+/// Parses the data coming from the serial port connected to Zeo.
+// TODO: IMPROVE move parser to library
 fn parse<const LEN: usize>(
     prev_seqnum: &mut Option<u8>,
     ring: &mut CircularBuffer<LEN, u8>,
