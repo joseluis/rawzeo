@@ -37,6 +37,12 @@ jobs:
         toolchain: [stable]
         # toolchain: [stable, beta]
     steps:
+      - name: "Install build dependencies"
+        # libudev-dev    : serial-port
+        run: |
+          sudo apt update
+          sudo apt install -y libudev-dev
+
       - name: "checkout"
         uses: actions/checkout@v3
 
