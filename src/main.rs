@@ -67,8 +67,8 @@ fn main() {
 
                 if bytes_received > 0 {
                     // TODO: print information
-                    if let Ok(Some(ref data)) = result {
-                        println!("PARSED: {data:?}");
+                    if let Ok(Some(ref parsed_msg)) = result {
+                        println!("PARSED: {parsed_msg:?}");
                     }
                 }
             }
@@ -86,6 +86,17 @@ fn print_bytes<E: ExactSizeIterator>(bytes: E) where <E as Iterator>::Item: core
     print!("[{} B]: ", bytes.len());
     for b in bytes { print!("{b:02X} "); }
     println!();
+}
+
+/// The data returned by the parser.
+#[derive(Clone, Debug)]
+#[allow(dead_code)] // TEMP
+pub struct ParsedMessage {
+    time_full: u32,
+    tt_ss: u16,
+    version: u32,
+    ty: DataType,
+    data: VecDeque<u8>,
 }
 
 /**
@@ -125,7 +136,7 @@ organize the data into events and slices of data.
 fn parse<const LEN: usize>(
     prev_seqnum: &mut Option<u8>,
     ring: &mut CircularBuffer<LEN, u8>,
-) -> Result<Option<(u32, u16, u32, DataType, VecDeque<u8>)>, &'static str> {
+) -> Result<Option<ParsedMessage>, &'static str> {
     // types to return
     let mut tt_ss = 0_u16;
     let mut datatype = DataType::Invalid(255);
@@ -323,5 +334,11 @@ fn parse<const LEN: usize>(
     //     println!["SUBSEC_SEEN: {:?}: {:?}", c.len(), c]
     // });
 
-    Ok(Some((zeo_time_full, tt_ss, zeo_version, datatype, datavec)))
+    Ok(Some(ParsedMessage {
+        time_full: zeo_time_full,
+        tt_ss,
+        version: zeo_version,
+        ty: datatype,
+        data: datavec,
+    }))
 }
